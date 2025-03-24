@@ -4,7 +4,16 @@ import './App.css';
 function App() {
   return (
     <>
-      Hello World
+      <header>
+      <img src='./public/littleLemonLogo.svg' alt='The logo of the little Lemon restaurant' />
+      <nav>
+      </nav>
+      </header>
+      <main>
+      </main>
+      <footer>
+      </footer>
+
     </>
   );
 }
