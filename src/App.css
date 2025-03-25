@@ -1,38 +1,158 @@
-.App {
-  text-align: center;
+@import "tailwindcss";
+
+/* Styles for text */
+
+:root {
+  --fs-1: 18px;
+  --fs-2: 40px;
+  --fs-3: 64px;
+  --fs-4: 8px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+p {
+  font-size: var(--fs-1);
+  font-family: "Karla";
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h1 {
+  font-size: var(--fs-3);
+  font-family: 'Markazi Text';
+  font-weight: 'bold';
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+h2 {
+  font-size: var(--fs-2);
+  font-family: 'Markazi Text';
+  font-weight: 'regular';
+}
+
+footer a {
+  font-size: var(--fs-4);
+  text-decoration-line: underline;
+}
+
+footer p {
+  font-size: var(--fs-4);
+  font-family: "Karla";
+}
+
+
+/* Page layout */
+
+.pageLayout {
+  display: grid;
+  grid-template-areas:
+  "nv nv nv nv",
+  "mn mn mn mn",
+  "mn mn mn mn",
+  "ft ft ft ft";
+}
+
+nav {
+  grid-area: 'nv';
+  background-color: #d6d6d6;
+  min-height: 10vh;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: 1fr;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-items: center;
+}
+
+main {
+  grid-area: 'mn';
+  background-color: #ffffff;
+  min-height: 32vh;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  align-items: center;
+  color: black;
+  justify-items: center;
+}
+
+footer {
+  grid-area: 'ft';
+  background-color: #b3b3b3;
+  min-height: 10vh;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr;
+  color: rgb(253, 253, 253);
+  padding: 2rem;
+}
+
+/* Lists */
+
+nav ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: auto;
+}
+
+nav li {
+  padding: 1rem;
+}
+
+/* Sections */
+section {
+  padding: 2rem;
+  gap: 1rem;
+}
+
+.HeroSection {
+  display: grid;
+  background-color: #4a5643;
+  grid-template-columns: 3fr 2fr;
+  grid-template-areas:
+  "hl hr";
+  margin-bottom: 4rem;
+  max-height: 50vh;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* A header and 3 cards below */
+.WeeksSpecial {
+  background-color: #ffffff;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Layout within sections, e.g. Hero Section, Blog Cards */
+
+.heroLeft {
+  grid-area: 'hl';
+}
+
+.heroLeft h1 {
+  color: yellow;
+}
+
+.heroRight {
+  grid-area: 'hr';
+  padding: 1rem;
+  justify-items: near-start;
+  overflow-y: auto;
+}
+
+.heroRight img {
+  max-height: 50vh;
+  border-radius: 16px;
+}
+
+.WeeksSpecial h1 {
+  margin: 1rem;
+}
+
+.Repeater {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 1rem;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+article {
+  background-color: #edefee;
+  box-shadow: #b3b3b3;
+  border-radius: 16px;
+  padding: 2rem;
 }
