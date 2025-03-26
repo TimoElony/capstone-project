@@ -22,6 +22,9 @@ function Main () {
                 <div className='Description'>
                 <h1>This week's specials</h1>
                 </div>
+                <div className='MenuButton'>
+                    <button>See the Menu</button>
+                </div>
                 <div className='Repeater'>
                 <article>
                     <img src={greeksalad} alt='greek salad'/>
