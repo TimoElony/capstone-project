@@ -21,9 +21,9 @@ h1 {
 }
 
 h2 {
-  font-size: var(--fs-2);
-  font-family: 'Markazi Text';
-  font-weight: 'regular';
+  font-size: var(--fs-1);
+  font-family: 'Karla';
+  font-weight: 'bold';
 }
 
 footer a {
@@ -36,6 +36,17 @@ footer p {
   font-family: "Karla";
 }
 
+
+/* Button style */
+
+button {
+  background-color: #F4CE14;
+  font-weight: bold;
+  border-radius: 16px;
+  color: black;
+  padding: 8px 12px 8px 12px;
+  margin-top: 1rem;
+}
 
 /* Page layout */
 
@@ -102,32 +113,49 @@ section {
 
 .HeroSection {
   display: grid;
-  background-color: #4a5643;
-  grid-template-columns: 3fr 2fr;
+  background-color: #495E57;
+  grid-template-columns: 2fr 2fr;
   grid-template-areas:
   "hl hr";
   margin-bottom: 4rem;
-  max-height: 50vh;
+  margin-top: 2rem;
+  max-height: 45vh;
   color: white;
+  gap: 10rem;
+  padding: 1% 10% 1% 10%;
 }
 
 /* A header and 3 cards below */
 .WeeksSpecial {
-  background-color: #ffffff;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 3fr;
+  grid-template-areas:
+  "top top"
+  "bottom bottom";
+  margin-bottom: 4rem;
+  margin-top: 2rem;
+  max-height: 80vh;
+  color: black;
+  gap: 2rem;
+  width: 100%;
+  padding: 3rem;
 }
 
 /* Layout within sections, e.g. Hero Section, Blog Cards */
 
 .heroLeft {
-  grid-area: 'hl';
+  grid-area: hl;
+  justify-self: left;
+  width: 80%;
 }
 
 .heroLeft h1 {
-  color: yellow;
+  color: #F4CE14;
 }
 
 .heroRight {
-  grid-area: 'hr';
+  grid-area: hr;
   padding: 1rem;
   justify-items: near-start;
   overflow-y: auto;
@@ -136,23 +164,42 @@ section {
 .heroRight img {
   max-height: 50vh;
   border-radius: 16px;
+  background-size: cover;
 }
 
-.WeeksSpecial h1 {
-  margin: 1rem;
+.Description {
+  grid-area: top;
 }
 
 .Repeater {
+  grid-area: bottom;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  margin: 1rem;
-  padding: 2rem;
-  gap: 2rem;
+  justify-items: center;
+  gap: 1rem;
+
 }
 
 article {
   background-color: #edefee;
   box-shadow: #b3b3b3;
   border-radius: 16px;
-  padding: 2rem;
+  box-sizing: border-box;
 }
+
+article img {
+  background-size: contain;
+  border-radius: 16px 16px 0 0;
+}
+
+.CardList {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  padding: 1rem;
+}
+
+.CardText {
+  padding: 1rem;
+  box-sizing: content-box;
+}
+
