@@ -9,7 +9,7 @@ function Main () {
         <>
         <section className='HeroSection'>
                 <div className='heroLeft'>
-                <h1>Little Lemon</h1>
+                <h1><span>Little Lemon</span></h1>
                 <p>Chicago</p>
                 <p>We are a family-owned little restaurant in downtown, Chicago. With an emphasis on local fresh produce and a mediterranean influence we offer the best quality.</p>
                 <button>Reserve a table</button>

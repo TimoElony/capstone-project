@@ -23,7 +23,12 @@ h1 {
 h2 {
   font-size: var(--fs-1);
   font-family: 'Karla';
-  font-weight: 'bold';
+  font-weight: bold;
+}
+
+h3,h4,h5,h6 {
+  font-family: "Karla";
+  font-weight: bold;
 }
 
 footer a {
@@ -34,6 +39,10 @@ footer a {
 footer p {
   font-size: var(--fs-4);
   font-family: "Karla";
+}
+
+span {
+  color: #F4CE14;
 }
 
 
@@ -180,10 +189,6 @@ section {
   grid-area: hl;
   justify-self: left;
   width: 90%;
-}
-
-.heroLeft h1 {
-  color: #F4CE14;
 }
 
 .heroRight {
