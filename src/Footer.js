@@ -1,9 +1,10 @@
 import Nav from './Nav.js';
+import logo from './littleLemonLogo.svg'
 
 function Footer () {
     return(
-        <>
-        <img src='../public/favicon.svg' alt='the logo'/>
+        <footer>
+        <img src={logo} alt='the logo'/>
         <Nav/>
         <ul>
             <li><p>Contact</p></li>
@@ -12,7 +13,7 @@ function Footer () {
             <li><p>Street</p></li>
             <li><p>etc</p></li>
         </ul>
-        </>
+        </footer>
     )
 }
 

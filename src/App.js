@@ -1,22 +1,28 @@
 import './App.css';
 import Header from './Header.js';
-import Main from './Main.js';
 import Footer from './Footer.js';
 import Nav from './Nav.js';
+import { Route, Routes } from 'react-router-dom';
+import HomePage from './HomePage.js';
+import BookingPage from './BookingPage.js';
+
+
+
 
 function App() {
   return (
-    <div className='pageLayout'>
+    <div className='PageLayout'>
       <nav>
       <Header/>
       <Nav />
       </nav>
       <main>
-      <Main/>
+        <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/booking" element={<BookingPage />} />
+        </Routes>
       </main>
-      <footer>
       <Footer />
-      </footer>
     </div>
   );
 }
