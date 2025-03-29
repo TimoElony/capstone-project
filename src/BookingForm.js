@@ -1,17 +1,7 @@
 import {useState } from "react";
 
 
-export default function BookingForm () {
-    const [availableTimes, setAvailableTimes] = useState(
-        [
-            '17:00',
-            '18:00',
-            '19:00',
-            '20:00',
-            '21:00',
-            '22:00'
-        ]
-    );
+export default function BookingForm ({availableTimes, onDateChange}) {
     const [formData, setFormData] = useState(
         {
             date: '',
@@ -25,7 +15,7 @@ export default function BookingForm () {
             {
                 date: '',
                 time: '',
-                guests: '',
+                guests: 1,
                 occasion: ''
             }
         )
@@ -39,6 +29,9 @@ export default function BookingForm () {
     };
 
     const handleChange = (e) => {
+        if(e.target.type === "date") {
+            onDateChange(e.target.value);
+        }
         setFormData(
             {
                 ...formData,
