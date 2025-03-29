@@ -1,8 +1,11 @@
 import './App.css'
+import BookingForm from './BookingForm';
 
 function BookingPage() {
     return(
-    <h1>Hello World</h1>
+    <>
+    <BookingForm/>
+    </>
     )
 }
 
