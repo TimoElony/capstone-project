@@ -9,6 +9,18 @@ test('Renders the BookingForm heading', () => {
   expect(headingElement).toBeInTheDocument();
 })
 
+test('Renders the BookingForm heading', () => {
+
+  window.alert = jest.fn();
+  render(<BookingForm availableTimes={['17:00','18:00']} onDateChange={()=>{}}/>);
+
+  const submitButton = screen.getByText(/Make your reservation/i); // i for case insensitive
+  expect(submitButton).toBeInTheDocument();
+
+  fireEvent.click(submitButton);
+  expect(window.alert).toHaveBeenCalledWith('submitted');
+})
+
 describe('initializeTimes', ()=>{
   test('validate that it returns the correct expected value', () => {
     const times = initializeTimes();
