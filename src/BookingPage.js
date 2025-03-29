@@ -3,17 +3,10 @@ import './App.css'
 import BookingForm from './BookingForm';
 
 function BookingPage() {
-    const initialTimes= [
-        '17:00',
-        '18:00',
-        '19:00',
-        '20:00',
-        '21:00',
-        '22:00'
-    ];
-    const [availableTimes, dispatch] = useReducer(timesReducer, initialTimes);
+    const [availableTimes, dispatch] = useReducer(timesReducer, initializeTimes());
 
     function updateTimes (date) {
+        alert(date)
         dispatch({
             type: 'updated',
             date: date,
@@ -29,7 +22,17 @@ function BookingPage() {
 
 export default BookingPage;
 
-function timesReducer (times, action) {
+export function initializeTimes () {
+    return [
+        '17:00',
+        '18:00',
+        '19:00',
+        '20:00',
+        '21:00',
+        '22:00'
+];}
+
+export function timesReducer (times, action) {
     switch (action.type) {
         case 'updated': {
             return times;
