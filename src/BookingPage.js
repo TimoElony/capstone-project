@@ -7,17 +7,26 @@ function BookingPage() {
     const [availableTimes, dispatch] = useReducer(timesReducer, initializeOldTimes());
 
     useEffect(()=>{
-        dispatch({
-            type: 'updated',
-            payload: fetchAPI(new Date())
-        })
+        // fetches the available times of today
+        async function fetchTimes () {
+            const times = await fetchAPI(new Date());
+            dispatch({
+                type: 'updated',
+                payload: times
+            })
+        }
+        fetchTimes();
     },[])
 
     function updateTimes (date) {
-        dispatch({
-            type: 'updated',
-            payload: fetchAPI(new Date(date)),
-        });
+        async function fetchTimes () {
+            const times = await fetchAPI(new Date(date));
+            dispatch({
+                type: 'updated',
+                payload: times
+            })
+        }
+        fetchTimes();
     }
 
     return(
