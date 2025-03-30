@@ -1,15 +1,22 @@
-import { useReducer } from 'react';
-import './App.css'
+import { useEffect, useReducer } from 'react';
+import './App.css';
 import BookingForm from './BookingForm';
+import {fetchAPI} from  './api';
 
 function BookingPage() {
-    const [availableTimes, dispatch] = useReducer(timesReducer, initializeTimes());
+    const [availableTimes, dispatch] = useReducer(timesReducer, initializeOldTimes());
 
-    function updateTimes (date) {
-        alert(date)
+    useEffect(()=>{
         dispatch({
             type: 'updated',
-            date: date,
+            payload: fetchAPI(new Date())
+        })
+    },[])
+
+    function updateTimes (date) {
+        dispatch({
+            type: 'updated',
+            payload: fetchAPI(new Date(date)),
         });
     }
 
@@ -22,20 +29,19 @@ function BookingPage() {
 
 export default BookingPage;
 
-export function initializeTimes () {
-    return [
+export function initializeOldTimes () {
+    return ([
         '17:00',
-        '18:00',
         '19:00',
-        '20:00',
-        '21:00',
-        '22:00'
-];}
+        '20:00'
+    ]);
+}
+
 
 export function timesReducer (times, action) {
     switch (action.type) {
         case 'updated': {
-            return times;
+            return action.payload;
         }
         default: {
             return times;

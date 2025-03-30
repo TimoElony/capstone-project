@@ -1,5 +1,5 @@
 import {useState } from "react";
-
+import {submitAPI} from  "./api";
 
 export default function BookingForm ({availableTimes, onDateChange}) {
     const [formData, setFormData] = useState(
@@ -23,9 +23,13 @@ export default function BookingForm ({availableTimes, onDateChange}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert('submitted');
-        e.target.reset();
-        resetForm();
+        if(submitAPI(formData)){
+            alert('submitted');
+            e.target.reset();
+            resetForm();
+        } else {
+            alert('not submitted')
+        }
     };
 
     const handleChange = (e) => {
