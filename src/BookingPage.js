@@ -11,7 +11,7 @@ function BookingPage() {
         async function fetchTimes () {
             const times = await fetchAPI(new Date());
             dispatch({
-                type: 'updated',
+                type: 'initialised',
                 payload: times
             })
         }
@@ -22,7 +22,7 @@ function BookingPage() {
         async function fetchTimes () {
             const times = await fetchAPI(new Date(date));
             dispatch({
-                type: 'updated',
+                type: 'date changed',
                 payload: times
             })
         }
@@ -49,7 +49,10 @@ export function initializeOldTimes () {
 
 export function timesReducer (times, action) {
     switch (action.type) {
-        case 'updated': {
+        case 'initialised': {
+            return action.payload;
+        }
+        case 'date changed': {
             return action.payload;
         }
         default: {
@@ -57,3 +60,4 @@ export function timesReducer (times, action) {
         }
     }
 }
+
