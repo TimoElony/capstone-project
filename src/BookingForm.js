@@ -45,7 +45,6 @@ export default function BookingForm ({availableTimes, onDateChange}) {
     };
     return(
         <>
-            <h1>Book your table</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="date">Choose date</label>
                 <input type="date" id="date" value={formData.date} onChange={handleChange}/>

@@ -31,6 +31,7 @@ function BookingPage() {
 
     return(
     <>
+    <h1>Book your table</h1>
     <BookingForm availableTimes={availableTimes} onDateChange={updateTimes} />
     </>
     )
