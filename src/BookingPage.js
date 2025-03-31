@@ -3,7 +3,7 @@ import './App.css';
 import BookingForm from './BookingForm';
 import {fetchAPI} from  './api';
 
-function BookingPage() {
+function BookingPage({onSubmit}) {
     const [availableTimes, dispatch] = useReducer(timesReducer, initializeOldTimes());
 
     useEffect(()=>{
@@ -32,7 +32,7 @@ function BookingPage() {
     return(
     <>
     <h1>Book your table</h1>
-    <BookingForm availableTimes={availableTimes} onDateChange={updateTimes} />
+    <BookingForm availableTimes={availableTimes} onSubmit={onSubmit} onDateChange={updateTimes} />
     </>
     )
 }
