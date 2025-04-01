@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import BookingForm from './BookingForm';
 import {BookingPage, initializeTimes, timesReducer} from "./BookingPage";
+import {fetchAPI} from  './api';
 
 test('Renders the BookingForm heading', () => {
   render(<BookingForm availableTimes={['17:00','18:00']} onDateChange={()=>{}}/>);
@@ -20,6 +21,8 @@ test('Renders the BookingForm heading', () => {
   fireEvent.click(submitButton);
   expect(window.alert).toHaveBeenCalledWith('submitted');
 })
+
+jest.mock('./api', ()=> ({fetchAPI: jest.fn()}));
 
 describe('initializeTimes', ()=>{
   test('validate that it returns the correct expected value', () => {

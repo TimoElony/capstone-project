@@ -4,29 +4,35 @@ import BookingForm from './BookingForm';
 import {fetchAPI} from  './api';
 
 function BookingPage({onSubmit}) {
+    //initializes with the old times
     const [availableTimes, dispatch] = useReducer(timesReducer, initializeOldTimes());
 
     useEffect(()=>{
-        // fetches the available times of today
-        async function fetchTimes () {
-            const times = await fetchAPI(new Date());
-            dispatch({
-                type: 'initialised',
-                payload: times
-            })
+        // fetches the available times of today to start with
+        async function initTimes () {
+            try {
+                const times = await fetchAPI(new Date());
+                dispatch({
+                    type: 'initialised',
+                    payload: times
+                })
+            } catch(error) {
+                console.error('intialization failed', error)
+            }
         }
-        fetchTimes();
+        initTimes();
     },[])
 
-    function updateTimes (date) {
-        async function fetchTimes () {
+    async function updateTimes (date) {
+        try {
             const times = await fetchAPI(new Date(date));
             dispatch({
-                type: 'date changed',
-                payload: times
+                    type: 'date changed',
+                    payload: times
             })
+        } catch(error) {
+            console.error('fetching didnt go through', error);
         }
-        fetchTimes();
     }
 
     return(
