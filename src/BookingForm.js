@@ -31,13 +31,14 @@ export default function BookingForm ({availableTimes, onDateChange, onSubmit}) {
     const handleChange = (e) => {
         if(e.target.type === "date") {
             onDateChange(e.target.value);
+        } else {
+            setFormData(
+                {
+                    ...formData,
+                    [e.target.id]: e.target.value
+                }
+            );
         }
-        setFormData(
-            {
-                ...formData,
-                [e.target.id]: e.target.value
-            }
-        );
     };
     return(
         <>
