@@ -1,10 +1,24 @@
 import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
 import BookingForm from './BookingForm';
 import BookingPage from "./BookingPage";
+import updateTimes from "./BookingPage";
 import {fetchAPI} from  './api';
 
 window.alert = jest.fn();
 jest.mock('./api', ()=> ({fetchAPI: jest.fn()}));
+
+//unit tests don't work because taking async functions outside of the component and just calling them doesnt seem to work very well
+// test('updateTimes', async ()=> {
+//   const mockDispatch = jest.fn();
+//   const mockTimes = ['17:00','18:00','24:00'];
+
+//   fetchAPI.mockResolvedValue(mockTimes);
+
+//   await updateTimes(new Date, mockDispatch);
+
+//   expect(fetchAPI).toHaveBeenCalledWith(expect.any(Date));
+//   expect(mockDispatch).toHaveBeenCalledWith({type: 'date changed', payload: mockTimes})
+// })
 
 test('Renders the BookingForm heading', () => {
   render(<BookingForm availableTimes={[]} onDateChange={()=>{}}/>);
