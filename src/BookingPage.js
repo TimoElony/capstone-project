@@ -8,8 +8,8 @@ function BookingPage({onSubmit}) {
     const [availableTimes, dispatch] = useReducer(timesReducer, initializeOldTimes());
 
     useEffect(()=>{
-        // fetches the available times of today to start with
-        async function initTimes () {
+        // upon rendering this fetches the available times of today
+        async function initializeTimes () {
             try {
                 const times = await fetchAPI(new Date());
                 dispatch({
@@ -20,7 +20,7 @@ function BookingPage({onSubmit}) {
                 console.error('intialization failed', error)
             }
         }
-        initTimes();
+        initializeTimes();
     },[])
 
     async function updateTimes (date) {
@@ -37,7 +37,6 @@ function BookingPage({onSubmit}) {
 
     return(
     <>
-    <h1>Book your table</h1>
     <BookingForm availableTimes={availableTimes} onSubmit={onSubmit} onDateChange={updateTimes} />
     </>
     )
