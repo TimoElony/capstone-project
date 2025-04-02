@@ -3,6 +3,14 @@ import './App.css';
 import BookingForm from './BookingForm';
 import {fetchAPI} from  './api';
 
+// async function useLessWrapper (dispatch) {
+//     try {
+//         await initializeTimes(dispatch);
+//     } catch(error) {
+//         console.error('fetching didnt go through', error);
+//     }
+// }
+
 function BookingPage({onSubmit}) {
     //initializes with the old times
     const [availableTimes, dispatch] = useReducer(timesReducer, initializeOldTimes());
@@ -13,7 +21,7 @@ function BookingPage({onSubmit}) {
             try {
                 const times = await fetchAPI(new Date());
                 dispatch({
-                    type: 'initialised',
+                    type: 'initialized',
                     payload: times
                 })
             } catch(error) {
@@ -23,21 +31,9 @@ function BookingPage({onSubmit}) {
         initializeTimes();
     },[])
 
-    async function updateTimes (date) {
-        try {
-            const times = await fetchAPI(new Date(date));
-            dispatch({
-                    type: 'date changed',
-                    payload: times
-            })
-        } catch(error) {
-            console.error('fetching didnt go through', error);
-        }
-    }
-
     return(
     <>
-    <BookingForm availableTimes={availableTimes} onSubmit={onSubmit} onDateChange={updateTimes} />
+    <BookingForm availableTimes={availableTimes} onSubmit={onSubmit} onDateChange={(date)=>updateTimes(date, dispatch)} />
     </>
     )
 }
@@ -52,6 +48,29 @@ export function initializeOldTimes () {
     ]);
 }
 
+// export async function initializeTimes (dispatch) {
+//     try {
+//         const times = await fetchAPI(new Date());
+//         dispatch({
+//             type: 'initialized',
+//             payload: times
+//         })
+//     } catch(error) {
+//         console.error('intialization failed', error)
+//     }
+// }
+
+export async function updateTimes (date, dispatch) {
+    try {
+        const times = await fetchAPI(new Date(date));
+        dispatch({
+                type: 'date changed',
+                payload: times
+        })
+    } catch(error) {
+        console.error('fetching didnt go through', error);
+    }
+}
 
 export function timesReducer (times, action) {
     switch (action.type) {
