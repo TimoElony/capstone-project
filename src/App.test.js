@@ -20,6 +20,20 @@ jest.mock('./api', ()=> ({fetchAPI: jest.fn()}));
 //   expect(mockDispatch).toHaveBeenCalledWith({type: 'date changed', payload: mockTimes})
 // })
 
+test('BookingForm inout elements have the correct attributes', ()=>{
+  render(<BookingForm availableTimes={[]} onDateChange={()=>{}}/>);
+
+  const dateInput = screen.getByLabelText(/date/i);
+  const timeInput = screen.getByLabelText(/time/i);
+  const guestInput = screen.getByLabelText(/guests/i);
+  const occasionInput = screen.getByLabelText(/occasion/i);
+
+  expect(dateInput).toHaveAttribute('type', 'date');
+  expect(timeInput).toHaveAttribute('type', 'string');
+  expect(guestInput).toHaveAttribute('type', 'number');
+  expect(occasionInput).toHaveAttribute('type', 'string');
+})
+
 test('Renders the BookingForm heading', () => {
   render(<BookingForm availableTimes={[]} onDateChange={()=>{}}/>);
 

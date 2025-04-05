@@ -47,22 +47,22 @@ export default function BookingForm ({availableTimes, onDateChange, onSubmit}) {
                 <label htmlFor="date">Choose date</label>
                 <input type="date" id="date" value={formData.date} onChange={handleChange} required/>
                 <label htmlFor="time">Choose time</label>
-                <select id="time" value={formData.time} onChange={handleChange} required>
+                <select id="time" type='string' value={formData.time} onChange={handleChange} required>
                     {
                         availableTimes.map((time, index)=> (
                             <option key={index} value={time}>{time}</option>
                         ))
                     }
                 </select>
-                    <label htmlFor="guests">Number of guests</label>
-                    <input type="number" placeholder="1" min="1" max="10" id="guests" value={formData.guests} onChange={handleChange} required/>
-                        <label htmlFor="occasion">Occasion</label>
-                        <select id="occasion" value={formData.occasion} onChange={handleChange}>
-                            <option value={'Not specified'}>None specified</option>
-                            <option value={'Birthday'}>Birthday</option>
-                            <option value={'Anniversary'}>Anniversary</option>
-                        </select>
-                        <input type="submit" value="Make Your reservation"/>
+                <label htmlFor="guests">Number of guests</label>
+                <input type="number" placeholder="1" min="1" max="10" id="guests" value={formData.guests} onChange={handleChange} required/>
+                <label htmlFor="occasion">Occasion</label>
+                <select id="occasion" type='string' value={formData.occasion} onChange={handleChange}>
+                    <option value={'Not specified'}>None specified</option>
+                    <option value={'Birthday'}>Birthday</option>
+                    <option value={'Anniversary'}>Anniversary</option>
+                </select>
+                <input type="submit" value="Make Your reservation"/>
             </form>
         </>
     );
