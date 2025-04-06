@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 
 export default function BookingConfirmed () {
     const location = useLocation();
@@ -8,12 +8,12 @@ export default function BookingConfirmed () {
         {formData ?
         <table>
         <caption>Your booking summary</caption>
-        <thead>
-        <tr><td><label htmlFor="dateOutput">Date: </label></td><td><p id='dateOutput'>{formData.date.toDateString()}</p></td></tr>
-        <tr><td><label htmlFor="timeOutput">Time: </label></td><td><p id='timeOutput'>{formData.time}</p></td></tr>
-        <tr><td><label htmlFor="guestsOutput">Guests: </label></td><td><p id='guestsOutput'>{formData.guests}</p></td></tr>
-        <tr><td><label htmlFor="occasionOutput">Occasion: </label></td><td><p id='occasionOutput'>{formData.occasion}</p></td></tr>
-        </thead>
+        <tbody>
+        <tr><th scope='row'>Date:</th><td><p>{formData.date.toDateString()}</p></td></tr>
+        <tr><th scope='row'>Time:</th><td><p>{formData.time}</p></td></tr>
+        <tr><th scope='row'>Guests:</th><td><p>{formData.guests}</p></td></tr>
+        <tr><th scope='row'>Occasion:</th><td><p>{formData.occasion}</p></td></tr>
+        </tbody>
         </table>:<p>No data available</p>}
         </>
     );

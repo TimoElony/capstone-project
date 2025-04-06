@@ -1,12 +1,19 @@
 import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
 import BookingForm from './BookingForm';
 import BookingPage from "./BookingPage";
-import Main from './Main';
+//import Main from './Main';
 import updateTimes from "./BookingPage";
 import {fetchAPI} from  './api';
+import BookingConfirmed from "./BookingConfirmed";
+import { useLocation } from "react-router";
 
 window.alert = jest.fn();
+jest.mock('react-router', ()=> ({
+  useLocation: jest.fn()
+}));
+
 jest.mock('./api', ()=> ({fetchAPI: jest.fn()}));
+
 
 //unit tests don't work because taking async functions outside of the component and just calling them doesnt seem to work very well
 // test('updateTimes', async ()=> {
@@ -22,25 +29,24 @@ jest.mock('./api', ()=> ({fetchAPI: jest.fn()}));
 // })
 
 test('successful validation -> all form data is displayed', ()=>{
-  render(<Main />);
+  useLocation.mockReturnValue({
+    state: {
+      date: new Date('2023-10-27'),
+      time: '12:00',
+      guests: 2,
+      occasion: 'Birthday',
+    },
+  });
 
-  const dateInput = screen.getByLabelText(/date/i);
-  const timeInput = screen.getByLabelText(/time/i);
-  const guestInput = screen.getByLabelText(/guests/i);
-  const occasionInput = screen.getByLabelText(/occasion/i);
+  render(<BookingConfirmed />);
 
-  const dateOutput = screen.getByLabelText(/date/i);
-  const timeOutput = screen.getByLabelText(/time/i);
-  const guestOutput = screen.getByLabelText(/guests/i);
-  const occasionOutput = screen.getByLabelText(/occasion/i);
-
-  expect(dateOutput).toEqual(dateInput.value.toDateString());
-  expect(timeOutput).toEqual(timeInput.value);
-  expect(guestOutput).toEqual(guestInput.value);
-  expect(occasionOutput).toEqual(occasionInput.value);
+  expect(screen.getByText(/2023/)).toBeInTheDocument();
+  expect(screen.getByText('12:00')).toBeInTheDocument();
+  expect(screen.getByText('2')).toBeInTheDocument();
+  expect(screen.getByText('Birthday')).toBeInTheDocument();
 })
 
-test('BookingForm inout elements have the correct attributes', ()=>{
+test('BookingForm input elements have the correct attributes', ()=>{
   render(<BookingForm availableTimes={[]} onDateChange={()=>{}}/>);
 
   const dateInput = screen.getByLabelText(/date/i);
