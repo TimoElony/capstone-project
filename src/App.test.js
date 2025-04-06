@@ -1,7 +1,8 @@
 import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
 import BookingForm from './BookingForm';
 import BookingPage from "./BookingPage";
-import updateTimes from "./BookingPage";
+import Main from './Main';
+//import updateTimes from "./BookingPage";
 import {fetchAPI} from  './api';
 
 window.alert = jest.fn();
@@ -20,7 +21,7 @@ jest.mock('./api', ()=> ({fetchAPI: jest.fn()}));
 //   expect(mockDispatch).toHaveBeenCalledWith({type: 'date changed', payload: mockTimes})
 // })
 
-test('BookingForm inout elements have the correct attributes', ()=>{
+test('BookingForm input elements have the correct attributes', ()=>{
   render(<BookingForm availableTimes={[]} onDateChange={()=>{}}/>);
 
   const dateInput = screen.getByLabelText(/date/i);
@@ -32,6 +33,25 @@ test('BookingForm inout elements have the correct attributes', ()=>{
   expect(timeInput).toHaveAttribute('id', 'time');
   expect(guestInput).toHaveAttribute('id', 'guests');
   expect(occasionInput).toHaveAttribute('id', 'occasion');
+})
+
+test('successful validation -> all form data is displayed', ()=>{
+  render(<Main />);
+
+  const dateInput = screen.getByLabelText(/date/i);
+  const timeInput = screen.getByLabelText(/time/i);
+  const guestInput = screen.getByLabelText(/guests/i);
+  const occasionInput = screen.getByLabelText(/occasion/i);
+
+  const dateOutput = screen.getByLabelText(/date/i);
+  const timeOutput = screen.getByLabelText(/time/i);
+  const guestOutput = screen.getByLabelText(/guests/i);
+  const occasionOutput = screen.getByLabelText(/occasion/i);
+
+  expect(dateOutput).toEqual(dateInput.value.toDateString());
+  expect(timeOutput).toEqual(timeInput.value);
+  expect(guestOutput).toEqual(guestInput.value);
+  expect(occasionOutput).toEqual(occasionInput.value);
 })
 
 test('Renders the BookingForm heading', () => {
