@@ -33,29 +33,32 @@ jest.mock('./api', ()=> ({fetchAPI: jest.fn()}));
 
 
 //unit test of the validation from data entered to successfull submit
-const submitMocker = jest.fn((e)=>{
+const submitMocker = jest.fn((data)=>{
   return Promise.resolve({submitted: true})
 });
 it('should call submit function with the correct arguments', async ()=>{
 
   render(<BookingForm availableTimes={[]} onDateChange={()=>{}} onSubmit={submitMocker}/>);
   //this here is completely pointless but makes the code wait for the async call to execute so that we have a test
-  expect(await screen.findByText(/reservation/i)).toBeInTheDocument()
+  expect(await screen.findByText(/reservation/i)).toBeInTheDocument();
 
-  const dateInput = screen.getByLabelText(/date/i);
-  const timeInput = screen.getByLabelText(/time/i);
-  const guestInput = screen.getByLabelText(/guests/i);
-  const occasionInput = screen.getByLabelText(/occasion/i);
+  fireEvent.input(await screen.getByLabelText(/date/i), { target: { value: '2025-09-01' } });
+  //fireEvent.change(await screen.getByLabelText(/time/i), { target: { value: '17:31' } });
+  fireEvent.input(await screen.getByLabelText(/guests/i), { target: { value: '4' } });
+  //fireEvent.change(await screen.getByLabelText(/occasion/i), { target: { value: 'Birthday' } });
 
-  fireEvent.input(dateInput, { target: { value: '2025-09-01' } });
-  fireEvent.input(timeInput, { target: { value: '17:31' } });
-  fireEvent.input(guestInput, { target: { value: '4' } });
-  fireEvent.input(occasionInput, { target: { value: 'Birthday' } });
-
+  expect(await screen.findByText(/date/i)).toBeInTheDocument();
   const formElement = screen.getByTestId('myForm');
+
   fireEvent.submit(formElement);
+
   await waitFor(()=>{
-    expect(submitMocker).toHaveBeenCalled();
+    expect(submitMocker).toHaveBeenCalledWith({
+      time:'17:31',
+      date: new Date('2025-09-01'),
+      guests: 4,
+      occasion: 'Birthday'
+    });
   })
 })
 
