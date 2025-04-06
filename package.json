@@ -5,6 +5,7 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@hookform/resolvers": "^5.0.1",
     "@tailwindcss/cli": "^4.0.15",
     "@tailwindcss/postcss": "^4.0.15",
     "@testing-library/dom": "^10.4.0",
@@ -14,9 +15,11 @@
     "postcss": "^8.5.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.55.0",
     "react-scripts": "5.0.1",
     "tailwindcss": "^4.0.15",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.6.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,63 +1,51 @@
-import {useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from 'yup';
+import { useForm } from "react-hook-form";
+
+const schema = yup.object({
+    date: yup.date().required(),
+    time: yup.string().required(),
+    guests: yup.number().min(1,'too small number of guests').max(12).required(),
+    occasion: yup.string()
+}).required();
 
 export default function BookingForm ({availableTimes, onDateChange, onSubmit}) {
-    const [formData, setFormData] = useState(
-        {
-            date: '',
-            time: '17:00',
+    //sections: useForm - state - handlers - markup
+    const {register, handleSubmit, formState: {errors}} = useForm({resolver: yupResolver(schema),
+        defaultValues: {
+            date: new Date(),
+            time: availableTimes[0],
             guests: 1,
             occasion: ''
         }
-    );
-    const resetForm = () => {
-        setFormData(
-            {
-                date: '',
-                time: '17:00',
-                guests: 1,
-                occasion: ''
-            }
-        )
+    });
+
+
+    const onFormSubmit = (data) => {
+        alert(data)
+        onSubmit(data);
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        alert('submitting')
-        alert(`submitted for date: ${formData.date}`);
-        onSubmit(formData);
-        resetForm();
-    };
-
-    const handleChange = (e) => {
-        if(e.target.type === "date") {
-            onDateChange(e.target.value);
-        } else {
-            setFormData(
-                {
-                    ...formData,
-                    [e.target.id]: e.target.value
-                }
-            );
-        }
-    };
     return(
         <>
             <h1>Book your table</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onFormSubmit)}>
                 <label htmlFor="date">Choose date</label>
-                <input type="date" id="date" value={formData.date} onChange={handleChange} required/>
+                <input {...register('date', {required: true, valueAsDate:true, onChange: (e) => onDateChange(e.target.value)})} type='date' id='date' />
                 <label htmlFor="time">Choose time</label>
-                <select id="time" type='string' value={formData.time} onChange={handleChange} required>
+                <select {...register('time', {required: true})} id= 'time'>
                     {
                         availableTimes.map((time, index)=> (
                             <option key={index} value={time}>{time}</option>
                         ))
                     }
                 </select>
+                <p>{errors.time?.message}</p>
                 <label htmlFor="guests">Number of guests</label>
-                <input type="number" placeholder="1" min="1" max="10" id="guests" value={formData.guests} onChange={handleChange} required/>
+                <input {...register('guests', {required: true, type: 'number'})} id='guests' placeholder='1'/>
+                <p>{errors.guests?.message}</p>
                 <label htmlFor="occasion">Occasion</label>
-                <select id="occasion" type='string' value={formData.occasion} onChange={handleChange}>
+                <select {...register('occasion')} id='occasion'>
                     <option value={'Not specified'}>None specified</option>
                     <option value={'Birthday'}>Birthday</option>
                     <option value={'Anniversary'}>Anniversary</option>

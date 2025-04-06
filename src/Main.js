@@ -10,7 +10,7 @@ function Main () {
         async function fetchsubmitForm (){
             const response = await submitAPI(formData);
             if(response && formData) {
-                alert(`submitform successful, response ${response} ${formData}`);
+                alert(`submitform successful, response ${response} ${formData.date}`);
                 navigate('/bookingConfirmed', {state: formData});
             } else {
                 alert('submitForm failed');

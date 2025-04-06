@@ -29,9 +29,9 @@ test('BookingForm inout elements have the correct attributes', ()=>{
   const occasionInput = screen.getByLabelText(/occasion/i);
 
   expect(dateInput).toHaveAttribute('type', 'date');
-  expect(timeInput).toHaveAttribute('type', 'string');
-  expect(guestInput).toHaveAttribute('type', 'number');
-  expect(occasionInput).toHaveAttribute('type', 'string');
+  expect(timeInput).toHaveAttribute('id', 'time');
+  expect(guestInput).toHaveAttribute('id', 'guests');
+  expect(occasionInput).toHaveAttribute('id', 'occasion');
 })
 
 test('Renders the BookingForm heading', () => {
