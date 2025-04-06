@@ -15,7 +15,7 @@ jest.mock('react-router', ()=> ({
 jest.mock('./api', ()=> ({fetchAPI: jest.fn()}));
 
 
-//unit tests don't work because taking async functions outside of the component and just calling them doesnt seem to work very well
+//unit tests don't work because taking async functions outside of the component and just calling them doesnt seem to work very well, it makes the component disfunctional
 // test('updateTimes', async ()=> {
 //   const mockDispatch = jest.fn();
 //   const mockTimes = ['17:00','18:00','24:00'];
