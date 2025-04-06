@@ -28,6 +28,28 @@ jest.mock('./api', ()=> ({fetchAPI: jest.fn()}));
 //   expect(mockDispatch).toHaveBeenCalledWith({type: 'date changed', payload: mockTimes})
 // })
 
+test('successful validation formData is emitted without error messages', ()=>{
+  const submitMocker = jest.fn();
+  render(<BookingForm availableTimes={[]} onDateChange={()=>{}} onSubmit={submitMocker}/>);
+
+  const dateInput = screen.getByLabelText(/date/i);
+  const timeInput = screen.getByLabelText(/time/i);
+  const guestInput = screen.getByLabelText(/guests/i);
+  const occasionInput = screen.getByLabelText(/occasion/i);
+
+  fireEvent.change(dateInput, { target: { value: '2025-09-01' } });
+  fireEvent.change(timeInput, { target: { value: '17:31' } });
+  fireEvent.change(guestInput, { target: { value: '4' } });
+  fireEvent.change(occasionInput, { target: { value: 'Birthday' } });
+
+  const formElement = screen.getByTestId('myForm');
+  fireEvent.submit(formElement);
+
+  expect(submitMocker).toHaveBeenCalled();
+
+
+})
+
 test('successful validation -> all form data is displayed', ()=>{
   useLocation.mockReturnValue({
     state: {

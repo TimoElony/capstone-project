@@ -29,7 +29,7 @@ export default function BookingForm ({availableTimes, onDateChange, onSubmit}) {
     return(
         <>
             <h1>Book your table</h1>
-            <form onSubmit={handleSubmit(onFormSubmit)}>
+            <form data-testid="myForm" onSubmit={handleSubmit(onFormSubmit)}>
                 <label htmlFor="date">Choose date</label>
                 <input {...register('date', {required: true, valueAsDate:true, onChange: (e) => onDateChange(e.target.value)})} type='date' id='date' />
                 <label htmlFor="time">Choose time</label>
