@@ -14,7 +14,7 @@ export default function BookingForm ({availableTimes, onDateChange, onSubmit}) {
     const {register, handleSubmit, formState: {errors}} = useForm({resolver: yupResolver(schema),
         defaultValues: {
             date: new Date(),
-            time: availableTimes[0],
+            time: '16:00',
             guests: 1,
             occasion: ''
         }

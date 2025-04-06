@@ -6,7 +6,8 @@ import updateTimes from "./BookingPage";
 import {fetchAPI} from  './api';
 import BookingConfirmed from "./BookingConfirmed";
 import { useLocation } from "react-router";
-import { wait } from "@testing-library/user-event/dist/utils";
+import {useForm} from 'react-hook-form';
+import { yupResolver } from "@hookform/resolvers/yup";
 
 window.alert = jest.fn();
 jest.mock('react-router', ()=> ({
@@ -30,27 +31,32 @@ jest.mock('./api', ()=> ({fetchAPI: jest.fn()}));
 //   expect(mockDispatch).toHaveBeenCalledWith({type: 'date changed', payload: mockTimes})
 // })
 
+
 //unit test of the validation from data entered to successfull submit
-test('successful validation formData is emitted without error messages', async ()=>{
-  const submitMocker = jest.fn();
+const submitMocker = jest.fn((e)=>{
+  return Promise.resolve({submitted: true})
+});
+it('should call submit function with the correct arguments', async ()=>{
+
   render(<BookingForm availableTimes={[]} onDateChange={()=>{}} onSubmit={submitMocker}/>);
-  //const {handleSubmit} = renderHook(()=>useForm());
+  //this here is completely pointless but makes the code wait for the async call to execute so that we have a test
+  expect(await screen.findByText(/reservation/i)).toBeInTheDocument()
 
   const dateInput = screen.getByLabelText(/date/i);
   const timeInput = screen.getByLabelText(/time/i);
   const guestInput = screen.getByLabelText(/guests/i);
   const occasionInput = screen.getByLabelText(/occasion/i);
 
-  fireEvent.change(dateInput, { target: { value: '2025-09-01' } });
-  fireEvent.change(timeInput, { target: { value: '17:31' } });
-  fireEvent.change(guestInput, { target: { value: '4' } });
-  fireEvent.change(occasionInput, { target: { value: 'Birthday' } });
+  fireEvent.input(dateInput, { target: { value: '2025-09-01' } });
+  fireEvent.input(timeInput, { target: { value: '17:31' } });
+  fireEvent.input(guestInput, { target: { value: '4' } });
+  fireEvent.input(occasionInput, { target: { value: 'Birthday' } });
 
   const formElement = screen.getByTestId('myForm');
   fireEvent.submit(formElement);
-
-  expect(submitMocker).toHaveBeenCalled();
-
+  await waitFor(()=>{
+    expect(submitMocker).toHaveBeenCalled();
+  })
 })
 
 //unit test of the BookingConfirmed Page
