@@ -22,7 +22,6 @@ export default function BookingForm ({availableTimes, onDateChange, onSubmit}) {
 
 
     const onFormSubmit = (data) => {
-        alert(data)
         onSubmit(data);
     };
 

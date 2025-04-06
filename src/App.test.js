@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent, renderHook, act, waitFor } from "@testing-library/react";
 import BookingForm from './BookingForm';
 import BookingPage from "./BookingPage";
 //import Main from './Main';
@@ -6,6 +6,7 @@ import updateTimes from "./BookingPage";
 import {fetchAPI} from  './api';
 import BookingConfirmed from "./BookingConfirmed";
 import { useLocation } from "react-router";
+import { wait } from "@testing-library/user-event/dist/utils";
 
 window.alert = jest.fn();
 jest.mock('react-router', ()=> ({
@@ -13,6 +14,7 @@ jest.mock('react-router', ()=> ({
 }));
 
 jest.mock('./api', ()=> ({fetchAPI: jest.fn()}));
+
 
 
 //unit tests don't work because taking async functions outside of the component and just calling them doesnt seem to work very well, it makes the component disfunctional
@@ -28,9 +30,11 @@ jest.mock('./api', ()=> ({fetchAPI: jest.fn()}));
 //   expect(mockDispatch).toHaveBeenCalledWith({type: 'date changed', payload: mockTimes})
 // })
 
-test('successful validation formData is emitted without error messages', ()=>{
+//unit test of the validation from data entered to successfull submit
+test('successful validation formData is emitted without error messages', async ()=>{
   const submitMocker = jest.fn();
   render(<BookingForm availableTimes={[]} onDateChange={()=>{}} onSubmit={submitMocker}/>);
+  //const {handleSubmit} = renderHook(()=>useForm());
 
   const dateInput = screen.getByLabelText(/date/i);
   const timeInput = screen.getByLabelText(/time/i);
@@ -47,9 +51,9 @@ test('successful validation formData is emitted without error messages', ()=>{
 
   expect(submitMocker).toHaveBeenCalled();
 
-
 })
 
+//unit test of the BookingConfirmed Page
 test('successful validation -> all form data is displayed', ()=>{
   useLocation.mockReturnValue({
     state: {
@@ -88,18 +92,6 @@ test('Renders the BookingForm heading', () => {
   const headingElement = screen.getByText(/Book your table/);
   expect(headingElement).toBeInTheDocument();
 })
-
-test('Submit button is in the document and working', () => {
-
-  const submitMocker = jest.fn();
-  render(<BookingForm availableTimes={[]} onDateChange={()=>{}} onSubmit={submitMocker}/>);
-
-  const submitButton = screen.getByText(/Make your reservation/i); // i for case insensitive
-
-  fireEvent.click(submitButton);
-  expect(submitMocker).toHaveBeenCalled;
-})
-
 
 
 describe('initializeTimes', ()=>{
