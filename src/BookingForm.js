@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 const schema = yup.object({
     date: yup.date().required().min(new Date('2025-03-01'),'too early'),
     time: yup.string().required(),
-    guests: yup.number('input must be of type number').min(1,'too small number of guests').max(12, 'too many people').required(),
+    guests: yup.number().required().min(1,'too small number of guests').max(12, 'too many people'),
     occasion: yup.string().oneOf(["Birthday", "Anniversary", 'None Specified'], 'invalid occasion')
 }).required();
 
@@ -46,7 +46,7 @@ export default function BookingForm ({availableTimes, onDateChange, onSubmit}) {
                     <option value={'Anniversary'}>Anniversary</option>
                 </select>
                 <p>{errors.occasion?.message}</p>
-                <input type="submit" value="Make Your reservation"/>
+                <input type="submit" value="Make Your reservation" aria-label='On Click'/>
             </form>
         </>
     );
