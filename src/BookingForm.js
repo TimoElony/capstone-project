@@ -26,7 +26,7 @@ export default function BookingForm ({availableTimes, onDateChange, onSubmit}) {
             <form data-testid="myForm" onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="date">Choose date</label>
                 <input {...register('date', {required: true, valueAsDate:true, onChange: (e)=>(onDateChange(e.target.value))})}  type='date' id='date' />
-                <p>{errors.date?.message}</p>
+                <p><strong>{errors.date?.message}</strong></p>
                 <label htmlFor="time">Choose time</label>
                 <select {...register('time', {required: true, onChange: (e)=>(e.target.value)})} id= 'time'>
                     {
@@ -35,17 +35,17 @@ export default function BookingForm ({availableTimes, onDateChange, onSubmit}) {
                         ))
                     }
                 </select>
-                <p>{errors.time?.message}</p>
+                <p><strong>{errors.time?.message}</strong></p>
                 <label htmlFor="guests">Number of guests</label>
                 <input {...register('guests', {required: true, type: 'number'})} id='guests' placeholder='1'/>
-                <p>{errors.guests?.message}</p>
+                <p><strong>{errors.guests?.message}</strong></p>
                 <label htmlFor="occasion">Occasion</label>
                 <select {...register('occasion')} id='occasion'>
                     <option value={'Not specified'}>None specified</option>
                     <option value={'Birthday'}>Birthday</option>
                     <option value={'Anniversary'}>Anniversary</option>
                 </select>
-                <p>{errors.occasion?.message}</p>
+                <p><strong>{errors.occasion?.message}</strong></p>
                 <input type="submit" value="Make Your reservation" aria-label='On Click'/>
             </form>
         </>

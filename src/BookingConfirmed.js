@@ -1,10 +1,12 @@
-import { useLocation } from "react-router";
+import { Link, useLocation } from "react-router";
 
 export default function BookingConfirmed () {
     const location = useLocation();
     const formData = location.state;
     return(
         <>
+        <Link className='SiteNav' to="/">Back to Start Page</Link>
+        <Link className='SiteNav' to="/booking">Change booking</Link>
         {formData ?
         <table>
         <caption><h2>Your booking summary</h2></caption>
