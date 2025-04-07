@@ -12,10 +12,34 @@ jest.mock('react-router', ()=> ({
 }));
 
 jest.mock('./api', ()=> ({fetchAPI: jest.fn()}));
-
-// Tests below
-// unit test of the validation from data entered to successfull submit
 const submit = jest.fn();
+// Tests below
+
+// unit test of validation in case incorrect input
+it('should display error messages if input is invalid', async () => {
+  render(<BookingForm availableTimes={['16:00','17:00','18:00']} onDateChange={()=>{}} onSubmit={submit}/>);
+
+  fireEvent.change(await screen.getByLabelText(/date/i), { target: { value: '2025-02-01' } });
+  fireEvent.change(await screen.getByLabelText(/time/i), { target: { value: '' } });
+  fireEvent.input(await screen.getByLabelText(/guests/i), { target: { value: 29 } });
+  fireEvent.change(await screen.getByLabelText(/occasion/i), { target: { value: 'incorrect123' } });
+
+  const formElement = screen.getByTestId('myForm');
+  fireEvent.submit(formElement);
+
+  await waitFor(()=>{
+    expect(screen.getByText(/too early/i)).toBeInTheDocument();
+    expect(screen.getByText(/time is a required field/i)).toBeInTheDocument();
+    expect(screen.getByText(/too many people/i)).toBeInTheDocument();
+    expect(screen.getByText(/invalid occasion/i)).toBeInTheDocument();
+    expect(submit).not.toHaveBeenCalled();
+  })
+
+
+})
+
+// unit test of the validation from data entered to successfull submit
+
 it('should call submit function with the given input values', async ()=>{
   render(<BookingForm availableTimes={['16:00','17:00','18:00']} onDateChange={()=>{}} onSubmit={submit}/>);
 

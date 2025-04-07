@@ -3,10 +3,10 @@ import * as yup from 'yup';
 import { useForm } from "react-hook-form";
 
 const schema = yup.object({
-    date: yup.date().required(),
+    date: yup.date().required().min(new Date('2025-03-01'),'too early'),
     time: yup.string().required(),
-    guests: yup.number().min(1,'too small number of guests').max(12).required(),
-    occasion: yup.string()
+    guests: yup.number('input must be of type number').min(1,'too small number of guests').max(12, 'too many people').required(),
+    occasion: yup.string().oneOf(["Birthday", "Anniversary", 'None Specified'], 'invalid occasion')
 }).required();
 
 export default function BookingForm ({availableTimes, onDateChange, onSubmit}) {
@@ -26,6 +26,7 @@ export default function BookingForm ({availableTimes, onDateChange, onSubmit}) {
             <form data-testid="myForm" onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="date">Choose date</label>
                 <input {...register('date', {required: true, valueAsDate:true, onChange: (e)=>(onDateChange(e.target.value))})}  type='date' id='date' />
+                <p>{errors.date?.message}</p>
                 <label htmlFor="time">Choose time</label>
                 <select {...register('time', {required: true, onChange: (e)=>(e.target.value)})} id= 'time'>
                     {
@@ -44,6 +45,7 @@ export default function BookingForm ({availableTimes, onDateChange, onSubmit}) {
                     <option value={'Birthday'}>Birthday</option>
                     <option value={'Anniversary'}>Anniversary</option>
                 </select>
+                <p>{errors.occasion?.message}</p>
                 <input type="submit" value="Make Your reservation"/>
             </form>
         </>
