@@ -2,6 +2,7 @@ import { useEffect, useReducer } from 'react';
 import './App.css';
 import BookingForm from './BookingForm';
 import {fetchAPI} from  './api';
+import { Link } from 'react-router-dom';
 
 function BookingPage({onSubmit}) {
     //initializes with the old times
@@ -37,6 +38,7 @@ function BookingPage({onSubmit}) {
 
     return(
     <>
+    <Link className='SiteNav' to="/">Back to Start Page</Link>
     <BookingForm availableTimes={availableTimes} onSubmit={onSubmit} onDateChange={updateTimes} />
     </>
     )
