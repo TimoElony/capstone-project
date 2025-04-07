@@ -20,19 +20,14 @@ export default function BookingForm ({availableTimes, onDateChange, onSubmit}) {
         }
     });
 
-
-    const onFormSubmit = (data) => {
-        onSubmit(data);
-    };
-
     return(
         <>
             <h1>Book your table</h1>
-            <form data-testid="myForm" onSubmit={handleSubmit(onFormSubmit)}>
+            <form data-testid="myForm" onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="date">Choose date</label>
-                <input {...register('date', {required: true, valueAsDate:true, onChange: (e) => onDateChange(e.target.value)})} type='date' id='date' />
+                <input {...register('date', {required: true, valueAsDate:true, onChange: (e)=>(onDateChange(e.target.value))})}  type='date' id='date' />
                 <label htmlFor="time">Choose time</label>
-                <select {...register('time', {required: true})} id= 'time'>
+                <select {...register('time', {required: true, onChange: (e)=>(e.target.value)})} id= 'time'>
                     {
                         availableTimes.map((time, index)=> (
                             <option key={index} value={time}>{time}</option>

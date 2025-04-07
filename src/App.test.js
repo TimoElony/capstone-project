@@ -1,14 +1,11 @@
 import { render, screen, fireEvent, renderHook, act, waitFor } from "@testing-library/react";
 import BookingForm from './BookingForm';
 import BookingPage from "./BookingPage";
-//import Main from './Main';
-import updateTimes from "./BookingPage";
 import {fetchAPI} from  './api';
 import BookingConfirmed from "./BookingConfirmed";
 import { useLocation } from "react-router";
-import {useForm} from 'react-hook-form';
-import { yupResolver } from "@hookform/resolvers/yup";
 
+//Mocking external APIs
 window.alert = jest.fn();
 jest.mock('react-router', ()=> ({
   useLocation: jest.fn()
@@ -16,49 +13,28 @@ jest.mock('react-router', ()=> ({
 
 jest.mock('./api', ()=> ({fetchAPI: jest.fn()}));
 
-
-
-//unit tests don't work because taking async functions outside of the component and just calling them doesnt seem to work very well, it makes the component disfunctional
-// test('updateTimes', async ()=> {
-//   const mockDispatch = jest.fn();
-//   const mockTimes = ['17:00','18:00','24:00'];
-
-//   fetchAPI.mockResolvedValue(mockTimes);
-
-//   await updateTimes(new Date, mockDispatch);
-
-//   expect(fetchAPI).toHaveBeenCalledWith(expect.any(Date));
-//   expect(mockDispatch).toHaveBeenCalledWith({type: 'date changed', payload: mockTimes})
-// })
-
-
-//unit test of the validation from data entered to successfull submit
-const submitMocker = jest.fn((data)=>{
-  return Promise.resolve({submitted: true})
-});
-it('should call submit function with the correct arguments', async ()=>{
-
-  render(<BookingForm availableTimes={[]} onDateChange={()=>{}} onSubmit={submitMocker}/>);
-  //this here is completely pointless but makes the code wait for the async call to execute so that we have a test
-  expect(await screen.findByText(/reservation/i)).toBeInTheDocument();
+// Tests below
+// unit test of the validation from data entered to successfull submit
+const submit = jest.fn();
+it('should call submit function with the given input values', async ()=>{
+  render(<BookingForm availableTimes={['16:00','17:00','18:00']} onDateChange={()=>{}} onSubmit={submit}/>);
 
   fireEvent.input(await screen.getByLabelText(/date/i), { target: { value: '2025-09-01' } });
-  //fireEvent.change(await screen.getByLabelText(/time/i), { target: { value: '17:31' } });
+  fireEvent.change(await screen.getByLabelText(/time/i), { target: { value: '17:00' } });
   fireEvent.input(await screen.getByLabelText(/guests/i), { target: { value: '4' } });
-  //fireEvent.change(await screen.getByLabelText(/occasion/i), { target: { value: 'Birthday' } });
+  fireEvent.change(await screen.getByLabelText(/occasion/i), { target: { value: 'Birthday' } });
 
-  expect(await screen.findByText(/date/i)).toBeInTheDocument();
   const formElement = screen.getByTestId('myForm');
-
   fireEvent.submit(formElement);
 
+  //this await is crucial
   await waitFor(()=>{
-    expect(submitMocker).toHaveBeenCalledWith({
-      time:'17:31',
+    expect(submit).toHaveBeenCalledWith({
+      time:'17:00',
       date: new Date('2025-09-01'),
       guests: 4,
       occasion: 'Birthday'
-    });
+    }, expect.anything());
   })
 })
 
